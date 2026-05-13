@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "185071404902",
+    "project_id": "auth-234-cbd55",
+    "storage_bucket": "auth-234-cbd55.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:185071404902:android:95507c25b0e1e973bc2aa7",
+        "android_client_info": {
+          "package_name": "com.example.auth"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMTmF2zVRI5Ze8Kofo_pKVpfJw--N6v1I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
