@@ -17,27 +17,32 @@ fun AppNavigation(viewModel: AuthViewModel) {
     val navController = rememberNavController()
     val authState by viewModel.authState.collectAsState()
 
-    // Reacciona a cambios de estado navegando automáticamente
-    LaunchedEffect(authState) {
-        when (authState) {
-            is AuthState.Authenticated -> navController.navigate("home") {
-                popUpTo("auth") { inclusive = true }
-            }
-            is AuthState.Unauthenticated -> navController.navigate("auth") {
-                popUpTo("home") { inclusive = true }
-            }
-            else -> Unit
-        }
-    }
-
     NavHost(navController = navController, startDestination = "splash") {
         composable("splash") {
+            LaunchedEffect(authState) {
+                when (authState) {
+                    is AuthState.Authenticated -> navController.navigate("home") {
+                        popUpTo("splash") { inclusive = true }
+                    }
+                    is AuthState.Unauthenticated -> navController.navigate("auth") {
+                        popUpTo("splash") { inclusive = true }
+                    }
+                    else -> Unit
+                }
+            }
             SplashScreen()
         }
         composable("auth") {
             AuthScreen(viewModel)
         }
         composable("home") {
+            LaunchedEffect(authState) {
+                if (authState is AuthState.Unauthenticated) {
+                    navController.navigate("auth") {
+                        popUpTo("home") { inclusive = true }
+                    }
+                }
+            }
             val state = authState as? AuthState.Authenticated
             HomeScreen(email = state?.email ?: "", viewModel = viewModel)
         }
@@ -46,7 +51,6 @@ fun AppNavigation(viewModel: AuthViewModel) {
 
 @Composable
 fun SplashScreen() {
-    // Pantalla vacía mientras carga el estado
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
